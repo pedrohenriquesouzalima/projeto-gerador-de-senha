@@ -9,33 +9,32 @@ const characters = {
     lowercase: "abcdefghijklmnopqrstuvwxyz",
     uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     numbers: "0123456789",
-    symbols: "!$%&|[](){}:;.,*+-#@<>~" 
+    symbols: "!$%&|[](){}:;.,*+-#@<>~"
 }
 
-const generatePassword = () =>{
+const generatePassword = () => {
     let staticPassword = "",
-    randomPassword = "",
-    excludeDuplicate = false,
-    passLenght = lengthSlider.value;
-    
-    options.forEach(option =>{
-        console.log(option.id);
-        if(option.checked){
-            if(option.id !== "exc-duplicate" && option.id !== "spaces"){
+        randomPassword = "",
+        excludeDuplicate = false,
+        passLength = lengthSlider.value;
+
+    options.forEach(option => {
+        if (option.checked) {
+            if (option.id !== "exc-duplicate" && option.id !== "spaces") {
                 staticPassword += characters[option.id];
-            } else if (option.id === "spaces"){
-                staticPassword += " ";
-            } else{
+            } else if (option.id === "spaces") {
+                staticPassword += `  ${staticPassword}  `;
+            } else {
                 excludeDuplicate = true;
             }
         }
     });
 
-    for( let i = 0; i < passLenght; i++) {
+    for (let i = 0; i < passLength; i++) {
         let randomChar = staticPassword[Math.floor(Math.random() * staticPassword.length)];
         if (excludeDuplicate) {
-            !randomPassword.includes(randomChar) | randomChar == " " ? randomPassword += randomChar : i--;
-        } else{
+            !randomPassword.includes(randomChar) || randomChar == " " ? randomPassword += randomChar : i--;
+        } else {
             randomPassword += randomChar;
         }
     }
@@ -43,7 +42,7 @@ const generatePassword = () =>{
 
 }
 
-const updatePassIndicator = () =>{
+const updatePassIndicator = () => {
     passIndicator.id = lengthSlider.value <= 8 ? "weak" : lengthSlider.value <= 16 ? "medium" : "strong";
 }
 
@@ -52,7 +51,6 @@ const updateSlider = () => {
     generatePassword();
     updatePassIndicator();
 }
-
 updateSlider();
 
 const copyPassword = () => {
@@ -60,7 +58,7 @@ const copyPassword = () => {
     copyIcon.innerText = "check";
     copyIcon.style.color = "#4285f4";
     setTimeout(() => {
-        copyIcon.innerText = "copy_all"
+        copyIcon.innerText = "copy_all";
         copyIcon.style.color = "#707070";
     }, 1500);
 }
